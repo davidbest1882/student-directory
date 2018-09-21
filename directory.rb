@@ -23,8 +23,8 @@ def print_header
 end
 
 def prints(names)
-  names.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  names.each_with_index do |student, index|
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
@@ -32,7 +32,15 @@ def print_footer(names)
   print "Overall, we have #{names.count} great students"
 end
 
+def names_begin_with(students, letter)
+  puts "...with names beginning with #{letter} are:"
+  students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0]  == letter
+  end
+end
+
 students = input_students
 print_header
-prints(students)
+# prints(students)
+names_begin_with(students, "D")
 print_footer(students)
