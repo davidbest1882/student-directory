@@ -19,12 +19,20 @@ end
 
 def print_header
   puts "The students of Villains Academy"
+  puts "with less than 12 characters in their name"
   puts "-------------"
 end
 
+# def prints(names)
+#   names.each_with_index do |student, index|
+#      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+#   end
+# end
+
+# prints names less than 12 characters
 def prints(names)
-  names.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+  names.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].size < 12
   end
 end
 
@@ -41,6 +49,6 @@ end
 
 students = input_students
 print_header
-# prints(students)
-names_begin_with(students, "D")
+prints(students)
+#names_begin_with(students, "D")
 print_footer(students)
