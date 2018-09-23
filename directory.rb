@@ -1,23 +1,10 @@
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-  # create an empty array
   students = []
-  # get the first name
-  name = gets.chomp
-  # add hobbies
-  puts "Enter any hobbies"
-  hobbies = gets.chomp
-  # add date of birth
-  puts "Enter date of birth"
-  dob = gets.chomp
-  # while the name is not empty, repeat this code
   while true do
-    # add the student hash to the array
-    students << {name: name, hobbies: hobbies, dob: dob, cohort: :November}
-    puts "Now we have #{students.count} students"
-    # get another name from the user
-    puts "Enter next students name"
+    # months for cohorts
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]    # get name from the user
+    puts "Please enter the names of the student"
+    puts "To finish, do not enter anything and hit return"
     name = gets.chomp
     if name.empty?
       break
@@ -28,6 +15,16 @@ def input_students
     # add date of birth
     puts "Enter date of birth"
     dob = gets.chomp
+    # add cohort
+    puts "Enter cohort month. Leave blank for current month"
+    cohort = gets.chomp
+    # if no cohort entered, current month is entered
+    if cohort.empty?
+     cohort = months[Time.now.mon - 1]
+    end
+    students << {name: name, hobbies: hobbies, dob: dob, cohort: cohort}
+    # add the student hash to the array
+    puts "Now we have #{students.count} students"
   end
   # return the array of students
   students
@@ -39,15 +36,16 @@ def print_header
   puts "-------------"
 end
 
-# prints student names and cohort
+# prints student names, hobbies, dob and cohort. Lines are centered
 def prints(names)
   count = 0
   width = 50
     while count < names.length
+     # prints student details, centered on line
      puts "#{names[count][:name]}".center(width)
      puts "Hobbies: #{names[count][:hobbies]}.".center(width)
      puts "Date of Birth: #{names[count][:dob]}".center(width)
-     puts "#{names[count][:cohort]} cohort"
+     puts "#{names[count][:cohort]} cohort".center(width)
      print "\n"
      count += 1
     end
