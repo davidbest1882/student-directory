@@ -42,10 +42,11 @@ end
 # prints student names and cohort
 def prints(names)
   count = 0
+  width = 50
     while count < names.length
-     puts "#{names[count][:name]}"
-     puts "Hobbies: #{names[count][:hobbies]}."
-     puts "Date of Birth: #{names[count][:dob]}"
+     puts "#{names[count][:name]}".center(width)
+     puts "Hobbies: #{names[count][:hobbies]}.".center(width)
+     puts "Date of Birth: #{names[count][:dob]}".center(width)
      puts "#{names[count][:cohort]} cohort"
      print "\n"
      count += 1
