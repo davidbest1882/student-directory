@@ -17,7 +17,7 @@ def input_students
     dob = gets.chomp
     # add cohort
     puts "Enter cohort month. Leave blank for current month"
-    cohort = gets.chomp
+    cohort = gets.chomp.to_sym
     # if no cohort entered, current month is entered
     if cohort.empty?
      cohort = months[Time.now.mon - 1]
@@ -75,8 +75,17 @@ def names_begin_with(students, letter)
   end
 end
 
+# print students from a given cohort
+def print_cohort(students, month)
+    puts "These are the students from #{month} cohort"
+    students.map do |student|
+        puts "#{student[:name]}" if student[:cohort] == month
+    end
+end
+
 students = input_students
-print_header
-prints(students)
+# print_header
+# prints(students)
 #names_begin_with(students, "D")
-print_footer(students)
+# print_footer(students)
+print_cohort(students, :November)
