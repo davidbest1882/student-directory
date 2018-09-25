@@ -22,9 +22,14 @@ def input_students
     if cohort.empty?
      cohort = months[Time.now.mon - 1]
     end
-    students << {name: name, hobbies: hobbies, dob: dob, cohort: cohort}
     # add the student hash to the array
-    puts "Now we have #{students.count} students"
+    students << {name: name, hobbies: hobbies, dob: dob, cohort: cohort}
+    # print student total
+    if students.count <= 1
+      puts "Now we have #{students.count} student"
+    else
+      puts "Now we have #{students.count} students"
+    end
   end
   # return the array of students
   students
@@ -65,7 +70,11 @@ end
 # end
 
 def print_footer(names)
-  print "Overall, we have #{names.count} great students"
+  if names.count <= 1
+    print "Overall, we have #{names.count} great student"
+  else
+    print "Overall, we have #{names.count} great students"
+  end
 end
 
 def names_begin_with(students, letter)
@@ -84,8 +93,8 @@ def print_cohort(students, month)
 end
 
 students = input_students
-# print_header
-# prints(students)
+print_header
+prints(students)
 #names_begin_with(students, "D")
-# print_footer(students)
-print_cohort(students, :November)
+print_footer(students)
+# print_cohort(students, :November)
