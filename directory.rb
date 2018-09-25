@@ -35,6 +35,7 @@ def input_students
   students
 end
 
+# If 1 or more students, prints header
 def print_header(students)
   if students.count > 0
     puts "The students of Villains Academy"
@@ -43,7 +44,7 @@ def print_header(students)
   end
 end
 
-# prints student names, hobbies, dob and cohort. Lines are centered
+# If 1 or more students, prints student names, hobbies, dob and cohort. Lines are centered
 def prints_details(names)
   count = 0
   width = 50
@@ -87,6 +88,7 @@ def print_cohort(students, month)
     end
 end
 
+# If 1 or more students, prints footer
 def print_footer(names)
   if names.count > 0
     puts "Overall, we have #{names.count} great students"
