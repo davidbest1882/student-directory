@@ -35,27 +35,30 @@ def input_students
   students
 end
 
-def print_header
-  puts "The students of Villains Academy"
-#  puts "with less than 12 characters in their name"
-  puts "-------------"
+def print_header(students)
+  if students.count > 0
+    puts "The students of Villains Academy"
+#   puts "with less than 12 characters in their name"
+    puts "-------------"
+  end
 end
 
 # prints student names, hobbies, dob and cohort. Lines are centered
-def prints(names)
+def prints_details(names)
   count = 0
   width = 50
     while count < names.length
-     # prints student details, centered on line
-     puts "#{names[count][:name]}".center(width)
-     puts "Hobbies: #{names[count][:hobbies]}.".center(width)
-     puts "Date of Birth: #{names[count][:dob]}".center(width)
-     puts "#{names[count][:cohort]} cohort".center(width)
-     print "\n"
-     count += 1
+      # prints student details, centered on line
+      puts "#{names[count][:name]}".center(width)
+      puts "Hobbies: #{names[count][:hobbies]}.".center(width)
+      puts "Date of Birth: #{names[count][:dob]}".center(width)
+      puts "#{names[count][:cohort]} cohort".center(width)
+      print "\n"
+      count += 1
     end
 end
 
+# prints name and cohort
 def prints(names)
   names.each_with_index do |student, index|
   puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
@@ -63,14 +66,10 @@ def prints(names)
 end
 
 # prints names less than 12 characters
-def prints(names)
+def prints_upto_12(names)
   names.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].size < 12
   end
-end
-
-def print_footer(names)
-  print "Overall, we have #{names.count} great students"
 end
 
 def names_begin_with(students, letter)
@@ -88,9 +87,15 @@ def print_cohort(students, month)
     end
 end
 
+def print_footer(names)
+  if names.count > 0
+    puts "Overall, we have #{names.count} great students"
+  end
+end
+
 students = input_students
-print_header
-prints(students)
+print_header(students)
+prints_details(students)
 # names_begin_with(students, "D")
 print_footer(students)
 # print_cohort(students, :November)
