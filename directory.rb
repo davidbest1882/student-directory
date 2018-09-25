@@ -5,7 +5,7 @@ def input_students
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]    # get name from the user
     puts "Please enter the names of the student"
     puts "To finish, do not enter anything and hit return"
-    name = gets.chomp
+    name = gets.delete("\n") # using alternative to chomp
     if name.empty?
       break
     end
@@ -56,25 +56,21 @@ def prints(names)
     end
 end
 
-# def prints(names)
-#   names.each_with_index do |student, index|
-#     puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
-#   end
-# end
+def prints(names)
+  names.each_with_index do |student, index|
+  puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+  end
+end
 
 # prints names less than 12 characters
-# def prints(names)
-#   names.each do |student|
-#     puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].size < 12
-#   end
-# end
+def prints(names)
+  names.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].size < 12
+  end
+end
 
 def print_footer(names)
-  if names.count <= 1
-    print "Overall, we have #{names.count} great student"
-  else
-    print "Overall, we have #{names.count} great students"
-  end
+  print "Overall, we have #{names.count} great students"
 end
 
 def names_begin_with(students, letter)
@@ -95,6 +91,6 @@ end
 students = input_students
 print_header
 prints(students)
-#names_begin_with(students, "D")
+# names_begin_with(students, "D")
 print_footer(students)
 # print_cohort(students, :November)
