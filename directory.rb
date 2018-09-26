@@ -1,9 +1,10 @@
+@students = [] # an empty array accessible to all methods
+  
 def input_students
-  students = []
   while true do
     # months for cohorts
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]    # get name from the user
-    puts "Please enter the names of the student"
+    puts "Please enter the name of the student"
     puts "To finish, do not enter anything and hit return"
     name = gets.delete("\n") # using alternative to chomp
     if name.empty?
@@ -23,21 +24,19 @@ def input_students
      cohort = months[Time.now.mon - 1]
     end
     # add the student hash to the array
-    students << {name: name, hobbies: hobbies, dob: dob, cohort: cohort}
+    @students << {name: name, hobbies: hobbies, dob: dob, cohort: cohort}
     # print student total
-    if students.count <= 1
-      puts "Now we have #{students.count} student"
+    if @students.count <= 1
+      puts "Now we have #{@students.count} student"
     else
-      puts "Now we have #{students.count} students"
+      puts "Now we have #{@students.count} students"
     end
   end
-  # return the array of students
-  students
 end
 
 # If 1 or more students, prints header
-def print_header(students)
-  if students.count > 0
+def print_header
+  if @students.length > 0
     puts "The students of Villains Academy"
 #   puts "with less than 12 characters in their name"
     puts "-------------"
@@ -45,15 +44,15 @@ def print_header(students)
 end
 
 # If 1 or more students, prints student names, hobbies, dob and cohort. Lines are centered
-def prints_details(names)
+def prints_details
   count = 0
   width = 50
-    while count < names.length
+    while count < @students.length
       # prints student details, centered on line
-      puts "#{names[count][:name]}".center(width)
-      puts "Hobbies: #{names[count][:hobbies]}.".center(width)
-      puts "Date of Birth: #{names[count][:dob]}".center(width)
-      puts "#{names[count][:cohort]} cohort".center(width)
+      puts "#{@students[count][:name]}".center(width)
+      puts "Hobbies: #{@students[count][:hobbies]}.".center(width)
+      puts "Date of Birth: #{@students[count][:dob]}".center(width)
+      puts "#{@students[count][:cohort]} cohort".center(width)
       print "\n"
       count += 1
     end
@@ -61,60 +60,65 @@ def prints_details(names)
 end
 
 # prints name and cohort
-def prints(names)
-  names.each_with_index do |student, index|
+def print_name
+  @students.each_with_index do |student, index|
   puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
 # prints names less than 12 characters
-def prints_upto_12(names)
-  names.each do |student|
+def prints_upto_12
+  @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].size < 12
   end
 end
 
-def names_begin_with(students, letter)
+def names_begin_with(letter)
   puts "...with names beginning with #{letter} are:"
-  students.each do |student|
+  @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0]  == letter
   end
 end
 
 # print students from a given cohort
-def print_cohort(students, month)
+def print_cohort(month)
     puts "These are the students from #{month} cohort"
-    students.map do |student|
+    @students.map do |student|
         puts "#{student[:name]}" if student[:cohort] == month
     end
 end
 
 # If 1 or more students, prints footer
-def print_footer(names)
-  if names.count > 0
-    puts "Overall, we have #{names.count} great students"
+def print_footer
+  if @students.count > 0
+    puts "Overall, we have #{@students.count} great students"
   end
 end
 
+# print the menu and ask the user what to do
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit" # 9 because we'll be adding more items
+end
+
+def show_students
+  print_header
+  print_name
+  print_footer
+end
 
 def interactive_menu
-  students =[]
   loop do
-    # print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit" # 9 because we'll be adding more items
-
+    print_menu
     # read the input and save it into a variable
     selection = gets.chomp
         
     case selection
     when "1"
-      students = input_students
+      input_students
     when "2"
-      print_header(students)
-      prints(students)
-      print_footer(students)
+      show_students
     when "9"
       exit # this will cause the program to terminate
     else
