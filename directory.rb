@@ -57,6 +57,7 @@ def prints_details(names)
       print "\n"
       count += 1
     end
+    
 end
 
 # prints name and cohort
@@ -95,9 +96,31 @@ def print_footer(names)
   end
 end
 
-students = input_students
-print_header(students)
-prints_details(students)
-# names_begin_with(students, "D")
-print_footer(students)
-# print_cohort(students, :November)
+
+def interactive_menu
+  students =[]
+  loop do
+    # print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit" # 9 because we'll be adding more items
+
+    # read the input and save it into a variable
+    selection = gets.chomp
+        
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header(students)
+      prints(students)
+      print_footer(students)
+    when "9"
+      exit # this will cause the program to terminate
+    else
+      puts "I dont know what you meant, try again"
+    end
+  end
+end
+
+interactive_menu
