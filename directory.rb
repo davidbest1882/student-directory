@@ -25,8 +25,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-#  puts "4. Load the students from a file"
+  puts "3. Save the list to a csv file"
+  puts "4. Load a different student list"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -44,8 +44,8 @@ def process(selection)
     show_students
   when "3"
     save_students
-#  when "4"
-#    load_students
+  when "4"
+    load_new_student_list
   when "9"
     exit # this will cause the program to terminate
   else
@@ -69,8 +69,10 @@ def print_footer
 end
 
 def save_students
+  puts "Please enter the name of the file to save to."
+  filename = gets.chomp
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -78,9 +80,13 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Your list has been saved."
+  print "\n"
 end
 
 def load_students(filename = "students.csv")
+#  puts "Enter a filename to load."
+#  filename = gets.chomp
   file = File.open(filename, "r")
   file.readlines.each do |lines|
   name, cohort = lines.chomp.split(",")
@@ -89,9 +95,17 @@ def load_students(filename = "students.csv")
   file.close
 end
 
+def load_new_student_list
+  puts "Enter a filename to load."
+  new_file = gets.chomp
+  @students = []
+  load_students(new_file)
+  puts "Loaded #{@students.count} students from #{new_file}"
+end
+
 def try_load_students
   filename = ARGV.first # first argument from the command line
-  if filename.nil?
+  if filename.nil? # if no file given as argument
     load_students
     filename = "students.csv"
   elsif File.exists?(filename) # if it exists
@@ -102,18 +116,6 @@ def try_load_students
   end
   puts "Loaded #{@students.count} students from #{filename}"
 end
-
-# def try_load_students
-#   filename = ARGV.first # first argument from the command line
-#    return if filename.nil? # get out of the method if it isn't given
-#   if File.exists?(filename) # if it exists
-#     load_students(filename)
-#       puts "Loaded #{@students.count} from #{filename}"
-#   else # if it doesn't exist
-#     puts "Sorry #{filename} doesn't exist."
-#     exit # quit the program
-#   end
-# end
 
 try_load_students
 interactive_menu
