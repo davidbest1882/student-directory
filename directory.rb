@@ -1,7 +1,7 @@
 @students = [] # an empty array accessible to all methods
 
 def input_students
-  puts "Please enter the names of the students"
+  puts "Please enter the name of the student"
   puts "To finish, just hit return twice"
   # get the first name
   name = STDIN.gets.chomp
@@ -72,14 +72,14 @@ def save_students
   puts "Please enter the name of the file to save to."
   filename = gets.chomp
   # open the file for writing
-  File.open(filename, "w") do |file|
+  file = File.open(filename, "w")
   # iterate over the array of students
-    @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
-    end
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
   end
+  file.close
   puts "Your list has been saved."
   print "\n"
 end
@@ -87,20 +87,25 @@ end
 def load_students(filename = "students.csv")
 #  puts "Enter a filename to load."
 #  filename = gets.chomp
-  File.open(filename, "r") do |file|
-    file.readlines.each do |lines|
-    name, cohort = lines.chomp.split(",")
-      @students << {name: name, cohort: cohort.to_sym}
-    end
+  file = File.open(filename, "r")
+  file.readlines.each do |lines|
+  name, cohort = lines.chomp.split(",")
+    @students << {name: name, cohort: cohort.to_sym}
   end
+  file.close
 end
 
 def load_new_student_list
   puts "Enter a filename to load."
   new_file = gets.chomp
   @students = []
-  load_students(new_file)
-  puts "Loaded #{@students.count} students from #{new_file}"
+  if File.exists?(new_file)
+    load_students(new_file)
+    puts "Loaded #{@students.count} students from #{new_file}"
+  else
+    puts "File does not exist. Create new student list?"
+    input_students if gets.chomp == "yes"
+  end
 end
 
 def try_load_students
