@@ -1,4 +1,5 @@
 @students = [] # an empty array accessible to all methods
+require 'csv'
 
 def input_students
   puts "Please enter the name of the student"
@@ -77,7 +78,7 @@ def save_students
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
       csv_line = student_data.join(",")
-      file.puts csv_line
+      file << csv_line
     end
   end
   puts "Your list has been saved."
@@ -85,11 +86,9 @@ def save_students
 end
 
 def load_students(filename = "students.csv")
-  File.open(filename, "r") do |file|
-    file.readlines.each do |lines|
-    name, cohort = lines.chomp.split(",")
+  CSV.foreach(filename) do |row|
+    name, cohort = row
       @students << {name: name, cohort: cohort.to_sym}
-    end
   end
 end
 
