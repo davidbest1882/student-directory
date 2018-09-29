@@ -78,7 +78,7 @@ def save_students
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
       csv_line = student_data.join(",")
-      file << csv_line
+      file.puts csv_line
     end
   end
   puts "Your list has been saved."
@@ -90,6 +90,7 @@ def load_students(filename = "students.csv")
     name, cohort = row
       @students << {name: name, cohort: cohort.to_sym}
   end
+  puts "Loaded #{@students.count} students from #{filename}"
 end
 
 def load_new_student_list
@@ -108,15 +109,14 @@ end
 def try_load_students
   filename = ARGV.first # first argument from the command line
   if filename.nil? # if no file given as argument
+    if File.exists?("students.csv") # if it exists
     load_students
-    filename = "students.csv"
+    else
+    load_new_student_list
+    end
   elsif File.exists?(filename) # if it exists
     load_students(filename)
-  else # if it doesn't exist
-    puts "Sorry #{filename} doesn't exist."
-    exit # quit the program
   end
-  puts "Loaded #{@students.count} students from #{filename}"
 end
 
 try_load_students
