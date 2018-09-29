@@ -88,7 +88,7 @@ def load_students(filename = "students.csv")
 #  puts "Enter a filename to load."
 #  filename = gets.chomp
   file = File.open(filename, "r")
-  file.readlines.each do |lines|
+  file.foreach do |lines|
   name, cohort = lines.chomp.split(",")
     @students << {name: name, cohort: cohort.to_sym}
   end
